@@ -16,7 +16,7 @@ public class Registrasi {
     private Admin admin;
 
     public User tambahUser(String nama, String akun, String password){
-       User u = new User(nama, akun, password);
+       User u = new User(nama, akun, password, "");
        return u;
     }
 }

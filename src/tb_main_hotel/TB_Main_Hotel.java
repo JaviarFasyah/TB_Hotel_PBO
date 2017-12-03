@@ -6,6 +6,8 @@
 package tb_main_hotel;
 
 import tb_main_hotel.UI.GUIListHotel;
+import tb_main_hotel.UI.GUIListUser;
+import tb_main_hotel.UI.GUILogin;
 
 /**
  *
@@ -47,8 +49,14 @@ public class TB_Main_Hotel {
         luser.tampil();
 */
         
+        GUILogin login = new GUILogin();
+        login.setVisible(true);
+        /*
         GUIListHotel view = new GUIListHotel();
+        GUIListUser view2 = new GUIListUser();
         view.setVisible(true);
+        view2.setVisible(true);
+*/
     }
     
 }

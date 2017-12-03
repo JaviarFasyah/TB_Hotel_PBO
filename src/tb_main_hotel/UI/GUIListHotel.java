@@ -12,6 +12,7 @@ import tb_main_hotel.Hotel;
 import tb_main_hotel.ListHotel;
 import tb_main_hotel.ListReservasi;
 import tb_main_hotel.ListReview;
+import tb_main_hotel.User;
 
 /**
  *
@@ -28,11 +29,13 @@ public class GUIListHotel extends javax.swing.JFrame {
     private DialogaddKamar addKamar;
     private ListReservasi listReservasi;
     private DialogaddReservasi addReservasi;
+    private User currentUser = null;
+    private DialogubahProfile ubahProfile;
 
     /**
      * Creates new form GUIListHotel
      */
-    public GUIListHotel() {
+    public GUIListHotel(User user) {
         
         initComponents();
         
@@ -42,7 +45,19 @@ public class GUIListHotel extends javax.swing.JFrame {
         this.addReview = new DialogaddReview(this, true);
         this.addKamar = new DialogaddKamar(this, true);
         this.addReservasi = new DialogaddReservasi(this, true);
+        this.ubahProfile = new DialogubahProfile(this, true, user);
+        this.currentUser = user;
         this.clearCurrentHotel();
+        
+        labelUser.setText(user.getNama() + " (" + user.getJenis() + ")");
+        if (!user.getJenis().equals("ADMIN")) {
+            this.btTambahHotel.setVisible(false);
+            this.btDelete.setVisible(false);
+            //this.tabDetail.remove(0);
+            this.btKamar.setVisible(false);
+            this.btDeleteKamar.setVisible(false);
+            this.btnManageUser.setVisible(false);
+        }
     }
 
     /**
@@ -62,21 +77,25 @@ public class GUIListHotel extends javax.swing.JFrame {
         btDelete = new javax.swing.JButton();
         titleReview = new javax.swing.JLabel();
         tabDetail = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        panKamar = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableListKamar = new javax.swing.JTable();
         btKamar = new javax.swing.JButton();
         btDeleteKamar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        panReservasi = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableListReservasi = new javax.swing.JTable();
         btReservasi = new javax.swing.JButton();
         btCancle = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        panReview = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableListReview = new javax.swing.JTable();
         btReview = new javax.swing.JButton();
         btDeleteReview = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        labelUser = new javax.swing.JLabel();
+        btnManageUser = new javax.swing.JButton();
+        btnProfil = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -130,36 +149,36 @@ public class GUIListHotel extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panKamarLayout = new javax.swing.GroupLayout(panKamar);
+        panKamar.setLayout(panKamarLayout);
+        panKamarLayout.setHorizontalGroup(
+            panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panKamarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panKamarLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btKamar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(panKamarLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(btDeleteKamar)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panKamarLayout.setVerticalGroup(
+            panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panKamarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panKamarLayout.createSequentialGroup()
                         .addComponent(btKamar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDeleteKamar))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Kamar", jPanel2);
+        tabDetail.addTab("Kamar", panKamar);
 
         tableListReservasi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tableListReservasi);
@@ -178,35 +197,35 @@ public class GUIListHotel extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panReservasiLayout = new javax.swing.GroupLayout(panReservasi);
+        panReservasi.setLayout(panReservasiLayout);
+        panReservasiLayout.setHorizontalGroup(
+            panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panReservasiLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btReservasi)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(panReservasiLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(btCancle)))
                 .addGap(21, 21, 21))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panReservasiLayout.setVerticalGroup(
+            panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panReservasiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panReservasiLayout.createSequentialGroup()
                         .addComponent(btReservasi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btCancle))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Reservasi", jPanel3);
+        tabDetail.addTab("Reservasi", panReservasi);
 
         jScrollPane2.setViewportView(tableListReview);
 
@@ -224,36 +243,77 @@ public class GUIListHotel extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout panReviewLayout = new javax.swing.GroupLayout(panReview);
+        panReview.setLayout(panReviewLayout);
+        panReviewLayout.setHorizontalGroup(
+            panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panReviewLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panReviewLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btReview))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(panReviewLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(btDeleteReview)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        panReviewLayout.setVerticalGroup(
+            panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panReviewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panReviewLayout.createSequentialGroup()
                         .addComponent(btReview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDeleteReview))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Review", jPanel4);
+        tabDetail.addTab("Review", panReview);
+
+        labelUser.setText("jLabel1");
+
+        btnManageUser.setText("Pengaturan User");
+        btnManageUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageUserActionPerformed(evt);
+            }
+        });
+
+        btnProfil.setText("Pengaturan Profil");
+        btnProfil.setToolTipText("");
+        btnProfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfilActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnManageUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProfil)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelUser)
+                    .addComponent(btnManageUser)
+                    .addComponent(btnProfil))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -261,18 +321,19 @@ public class GUIListHotel extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tabDetail, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabDetail)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(titleListHotel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btTambahHotel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btDelete))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(titleReview)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -288,7 +349,9 @@ public class GUIListHotel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(titleReview)
                 .addGap(18, 18, 18)
-                .addComponent(tabDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -305,8 +368,8 @@ public class GUIListHotel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -483,6 +546,19 @@ public class GUIListHotel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btCancleActionPerformed
 
+    private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
+        // TODO add your handling code here:
+        GUIListUser guiUser = new GUIListUser(this, this.currentUser);
+        guiUser.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnManageUserActionPerformed
+
+    private void btnProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfilActionPerformed
+        // TODO add your handling code here:
+        this.ubahProfile.setVisible(true);
+        labelUser.setText(this.currentUser.getNama() + " (" + currentUser.getJenis() + ")");
+    }//GEN-LAST:event_btnProfilActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -497,14 +573,18 @@ public class GUIListHotel extends javax.swing.JFrame {
     private javax.swing.JButton btReservasi;
     private javax.swing.JButton btReview;
     private javax.swing.JButton btTambahHotel;
+    private javax.swing.JButton btnManageUser;
+    private javax.swing.JButton btnProfil;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel labelUser;
+    private javax.swing.JPanel panKamar;
+    private javax.swing.JPanel panReservasi;
+    private javax.swing.JPanel panReview;
     private javax.swing.JTabbedPane tabDetail;
     private javax.swing.JTable tableListHotel;
     private javax.swing.JTable tableListKamar;
