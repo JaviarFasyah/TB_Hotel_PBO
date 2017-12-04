@@ -13,7 +13,7 @@ public class Registrasi {
     private String nama;
     private String akun;
     private String password;
-    private Admin admin;
+
 
     public User tambahUser(String nama, String akun, String password){
        User u = new User(nama, akun, password, "");

@@ -70,7 +70,7 @@ public class ListKamar {
         return this.kamarArray.size();
     }
     
-      public Kamar get(int index) {
+    public Kamar get(int index) {
     
         if ((index > -1) && (index < this.kamarArray.size())) {
             return this.kamarArray.get(index);

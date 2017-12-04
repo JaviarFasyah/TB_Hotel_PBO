@@ -5,11 +5,13 @@
  */
 package tb_main_hotel;
 
+import javax.swing.table.AbstractTableModel;
+
 /**
  *
  * @author BINGLE
  */
-public class TableLokasi {
+public class TableLokasi extends AbstractTableModel{
     private String[] columnNames = { "IdLokasi", "Kota", "Provinsi" };
     private ListLokasi list;
 

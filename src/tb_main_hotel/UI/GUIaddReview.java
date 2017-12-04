@@ -53,6 +53,7 @@ public class GUIaddReview extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         titleReview.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         titleReview.setText("Review");

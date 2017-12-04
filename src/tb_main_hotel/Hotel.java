@@ -20,6 +20,8 @@ public class Hotel {
     private ListReview listReview;
     private ListKamar listKamar;
     private ListReservasi listReservasi;
+    private ListFasilitas listFasilitas;
+    private ListLokasi listLokasi;
     
     public Hotel(int id, String nama, String informasi){
         
@@ -29,6 +31,8 @@ public class Hotel {
         this.listReview = new ListReview(new Database(), id);
         this.listKamar = new ListKamar(new Database(), id);
         this.listReservasi = new ListReservasi(new Database(), id);
+        this.listFasilitas = new ListFasilitas(new Database(), id);
+        this.listLokasi = new ListLokasi(new Database(), id);
     }
 
     /**
@@ -68,6 +72,16 @@ public class Hotel {
         return this.listReservasi;
     }   
     
+    public ListFasilitas getFasilitas() {
+        this.listFasilitas.refesh();
+        return this.listFasilitas;
+    }   
+      
+     public ListLokasi getLokasi() {
+        this.listLokasi.refesh();
+        return this.listLokasi;
+    }   
+     
     public void tampil() {
     
         System.out.println("Hotel #" + this.idHotel + ": " + this.nama);

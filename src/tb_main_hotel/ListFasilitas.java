@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
+
 
 /**
  *
@@ -30,7 +30,7 @@ public class ListFasilitas {
      public int refesh() {
 
         try{
-            ResultSet rs = this.db.getData("select nama, deskripsi from fasilitas where (idHotel = " + this.idHotel + ")");
+            ResultSet rs = this.db.getData("select idFasilitas, nama, deskripsi from fasilitas where (idHotel = " + this.idHotel + ")");
             
             this.fasarray.clear();
             while(rs.next()){    
@@ -39,7 +39,7 @@ public class ListFasilitas {
             }
             rs.close();
         }catch(Exception e){
-            System.out.println("Error load review " +e.getMessage());
+            System.out.println("Error load fasilitas " +e.getMessage());
         }
         return this.fasarray.size();
     }
@@ -59,7 +59,7 @@ public class ListFasilitas {
         return out;
     }
     
-
+   
 
     public int count() {
     
@@ -82,7 +82,7 @@ public class ListFasilitas {
         int i = this.cari(id);
         if (i > -1) {
             try {
-                if (this.db.query("delete from fasilitas where (idHotel = " + this.idHotel + ") and (idfasilitas = " + id + ")")) {
+                if (this.db.query("delete from fasilitas where (idHotel = " + this.idHotel + ") and (idFasilitas = " + id + ")")) {
                     this.fasarray.remove(i);
                     return true;
                 } else {
@@ -115,16 +115,7 @@ public class ListFasilitas {
     public void tampil(JTable jtable) {
         
         TableFasilitas data = new TableFasilitas(this);
-        jtable.setModel((TableModel) data);
-        /*
-        if (this.hotelArray.size() > 0) {
-            for (int j = 0; j < this.hotelArray.size(); j++) {
-                jtable.setValueAt(this.hotelArray.get(j).getId(), j, 0);
-                jtable.setValueAt(this.hotelArray.get(j).getNama(), j, 1);
-                jtable.setValueAt(this.hotelArray.get(j).getInformasi(), j, 2);
-            }
-        }
-        */
+        jtable.setModel(data);
     }
 
     public void tampil(JComboBox jcombo) {
@@ -145,9 +136,9 @@ public class ListFasilitas {
         
         /*id otomatis */
         int id = this.fasarray.size()+1;
-        System.out.println("insert into fasilitas (idfasilitas, fasilitas, deskripsi, idHotel) values (" + id + ", '" + fasilitas + "', '" + deskripsi + "', " + this.idHotel +")");
+        System.out.println("insert into fasilitas (idFasilitas, nama, deskripsi, idHotel) values (" + id + ", '" + fasilitas + "', '" + deskripsi + "', " + this.idHotel +")");
         /* simpan ke db */
-        if (this.db.query("insert into fasilitas (idfasilitas, fasilitas, deskripsi, idHotel) values (" + id+ ", '" + fasilitas + "', '" + deskripsi + "', " + this.idHotel +")")) {
+        if (this.db.query("insert into fasilitas (idFasilitas, nama, deskripsi, idHotel) values (" + id+ ", '" + fasilitas + "', '" + deskripsi + "', " + this.idHotel +")")) {
             /* add ke list */
             Fasilitas fasarray = new Fasilitas(id, fasilitas, deskripsi, this.idHotel);
             this.fasarray.add(fasarray);

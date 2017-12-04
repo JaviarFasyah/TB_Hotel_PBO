@@ -9,7 +9,9 @@ import tb_main_hotel.ListKamar;
 import javax.swing.JOptionPane;
 import tb_main_hotel.Database;
 import tb_main_hotel.Hotel;
+import tb_main_hotel.ListFasilitas;
 import tb_main_hotel.ListHotel;
+import tb_main_hotel.ListLokasi;
 import tb_main_hotel.ListReservasi;
 import tb_main_hotel.ListReview;
 import tb_main_hotel.User;
@@ -31,6 +33,11 @@ public class GUIListHotel extends javax.swing.JFrame {
     private DialogaddReservasi addReservasi;
     private User currentUser = null;
     private DialogubahProfile ubahProfile;
+    private ListFasilitas listFasilitas;
+    private addFasilitas addFasilitas;
+    private ListLokasi listLokasi;
+    private addLokasi addLokasi;
+            
 
     /**
      * Creates new form GUIListHotel
@@ -46,6 +53,8 @@ public class GUIListHotel extends javax.swing.JFrame {
         this.addKamar = new DialogaddKamar(this, true);
         this.addReservasi = new DialogaddReservasi(this, true);
         this.ubahProfile = new DialogubahProfile(this, true, user);
+        this.addFasilitas = new addFasilitas(this, true);
+        this.addLokasi = new addLokasi(this, true);
         this.currentUser = user;
         this.clearCurrentHotel();
         
@@ -57,6 +66,10 @@ public class GUIListHotel extends javax.swing.JFrame {
             this.btKamar.setVisible(false);
             this.btDeleteKamar.setVisible(false);
             this.btnManageUser.setVisible(false);
+            this.btDeleteFasilitas.setVisible(false);
+            this.btDeleteLokasi.setVisible(false);
+            this.btFasilitas.setVisible(false);
+            this.btLokasi.setVisible(false);
         }
     }
 
@@ -75,8 +88,17 @@ public class GUIListHotel extends javax.swing.JFrame {
         tableListHotel = new javax.swing.JTable();
         btTambahHotel = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
-        titleReview = new javax.swing.JLabel();
-        tabDetail = new javax.swing.JTabbedPane();
+        tabDetaiHotel = new javax.swing.JTabbedPane();
+        panLokasi = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tableListLokasi = new javax.swing.JTable();
+        btLokasi = new javax.swing.JButton();
+        btDeleteLokasi = new javax.swing.JButton();
+        panFasilitas = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tableListFasilias = new javax.swing.JTable();
+        btFasilitas = new javax.swing.JButton();
+        btDeleteFasilitas = new javax.swing.JButton();
         panKamar = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableListKamar = new javax.swing.JTable();
@@ -92,12 +114,14 @@ public class GUIListHotel extends javax.swing.JFrame {
         tableListReview = new javax.swing.JTable();
         btReview = new javax.swing.JButton();
         btDeleteReview = new javax.swing.JButton();
+        titleReview = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         labelUser = new javax.swing.JLabel();
         btnManageUser = new javax.swing.JButton();
         btnProfil = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -129,8 +153,101 @@ public class GUIListHotel extends javax.swing.JFrame {
             }
         });
 
-        titleReview.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        titleReview.setText("-");
+        tableListLokasi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(tableListLokasi);
+
+        btLokasi.setText("Tambah Lokasi");
+        btLokasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLokasiActionPerformed(evt);
+            }
+        });
+
+        btDeleteLokasi.setText("Delete");
+        btDeleteLokasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteLokasiActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panLokasiLayout = new javax.swing.GroupLayout(panLokasi);
+        panLokasi.setLayout(panLokasiLayout);
+        panLokasiLayout.setHorizontalGroup(
+            panLokasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panLokasiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addGroup(panLokasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panLokasiLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btLokasi))
+                    .addGroup(panLokasiLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btDeleteLokasi)))
+                .addContainerGap())
+        );
+        panLokasiLayout.setVerticalGroup(
+            panLokasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panLokasiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panLokasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panLokasiLayout.createSequentialGroup()
+                        .addComponent(btLokasi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btDeleteLokasi))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+
+        tabDetaiHotel.addTab("Lokasi", panLokasi);
+
+        tableListFasilias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane5.setViewportView(tableListFasilias);
+
+        btFasilitas.setText("Tambah Fasilitas");
+        btFasilitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFasilitasActionPerformed(evt);
+            }
+        });
+
+        btDeleteFasilitas.setText("Delete");
+        btDeleteFasilitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteFasilitasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panFasilitasLayout = new javax.swing.GroupLayout(panFasilitas);
+        panFasilitas.setLayout(panFasilitasLayout);
+        panFasilitasLayout.setHorizontalGroup(
+            panFasilitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panFasilitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                .addGroup(panFasilitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panFasilitasLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btFasilitas))
+                    .addGroup(panFasilitasLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btDeleteFasilitas)))
+                .addContainerGap())
+        );
+        panFasilitasLayout.setVerticalGroup(
+            panFasilitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panFasilitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panFasilitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panFasilitasLayout.createSequentialGroup()
+                        .addComponent(btFasilitas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btDeleteFasilitas))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+
+        tabDetaiHotel.addTab("Fasilitas", panFasilitas);
 
         tableListKamar.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(tableListKamar);
@@ -155,7 +272,7 @@ public class GUIListHotel extends javax.swing.JFrame {
             panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panKamarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addGroup(panKamarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panKamarLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -178,7 +295,7 @@ public class GUIListHotel extends javax.swing.JFrame {
                 .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Kamar", panKamar);
+        tabDetaiHotel.addTab("Kamar", panKamar);
 
         tableListReservasi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tableListReservasi);
@@ -203,7 +320,7 @@ public class GUIListHotel extends javax.swing.JFrame {
             panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panReservasiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btReservasi)
@@ -225,7 +342,7 @@ public class GUIListHotel extends javax.swing.JFrame {
                 .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Reservasi", panReservasi);
+        tabDetaiHotel.addTab("Reservasi", panReservasi);
 
         jScrollPane2.setViewportView(tableListReview);
 
@@ -249,7 +366,7 @@ public class GUIListHotel extends javax.swing.JFrame {
             panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panReviewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                 .addGroup(panReviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panReviewLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -272,7 +389,10 @@ public class GUIListHotel extends javax.swing.JFrame {
                 .addContainerGap(93, Short.MAX_VALUE))
         );
 
-        tabDetail.addTab("Review", panReview);
+        tabDetaiHotel.addTab("Review", panReview);
+
+        titleReview.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        titleReview.setText("-");
 
         labelUser.setText("jLabel1");
 
@@ -322,7 +442,7 @@ public class GUIListHotel extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabDetail)
+                    .addComponent(tabDetaiHotel)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(titleListHotel)
@@ -349,7 +469,7 @@ public class GUIListHotel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(titleReview)
                 .addGap(18, 18, 18)
-                .addComponent(tabDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabDetaiHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -415,19 +535,6 @@ public class GUIListHotel extends javax.swing.JFrame {
         this.listHotel.tampil(this.tableListHotel);
     }//GEN-LAST:event_formWindowOpened
 
-    private void btReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReviewActionPerformed
-        // TODO add your handling code here:
-        if (this.hasCurrentHotel()) {
-            this.addReview.setListReview(this.currentHotel.getReview());
-            this.addReview.setTitle(this.currentHotel.getNama());
-            this.addReview.setVisible(true);
-            this.currentHotel.getReview().tampil(this.tableListReview);
-        } else {
-            JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
-        }
-        
-    }//GEN-LAST:event_btReviewActionPerformed
-
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         if (this.hasCurrentHotel()) {
@@ -448,18 +555,33 @@ public class GUIListHotel extends javax.swing.JFrame {
             this.currentHotel.getReview().tampil(this.tableListReview);
             this.currentHotel.getKamar().tampil(this.tableListKamar);
             this.currentHotel.getReservasi().tampil(this.tableListReservasi);
+            this.currentHotel.getFasilitas().tampil(this.tableListFasilias);
+            this.currentHotel.getLokasi().tampil(this.tableListLokasi);
         }
     }//GEN-LAST:event_tableListHotelMouseClicked
+
+    private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
+        // TODO add your handling code here:
+        GUIListUser guiUser = new GUIListUser(this, this.currentUser);
+        guiUser.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnManageUserActionPerformed
+
+    private void btnProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfilActionPerformed
+        // TODO add your handling code here:
+        this.ubahProfile.setVisible(true);
+        labelUser.setText(this.currentUser.getNama() + " (" + currentUser.getJenis() + ")");
+    }//GEN-LAST:event_btnProfilActionPerformed
 
     private void btDeleteReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteReviewActionPerformed
         // TODO add your handling code here:
         if (this.hasCurrentHotel()) {
             int row = this.tableListReview.getSelectedRow();
             if (row > -1) {
-                
+
                 /* ambil id review */
                 int id = Integer.parseInt(this.tableListReview.getValueAt(row, 0).toString());
-                
+
                 if (this.currentHotel.getReview().deleteReview(id)) {
                     this.currentHotel.getReview().tampil(this.tableListReview);
                 } else {
@@ -473,39 +595,40 @@ public class GUIListHotel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btDeleteReviewActionPerformed
 
-    private void btKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKamarActionPerformed
+    private void btReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReviewActionPerformed
         // TODO add your handling code here:
         if (this.hasCurrentHotel()) {
-            this.addKamar.setListKamar(this.currentHotel.getKamar());
-            this.addKamar.setTitle(this.currentHotel.getNama());
-            this.addKamar.setVisible(true);
-            this.currentHotel.getKamar().tampil(this.tableListKamar);
+            this.addReview.setListReview(this.currentHotel.getReview());
+            this.addReview.setTitle(this.currentHotel.getNama());
+            this.addReview.setVisible(true);
+            this.currentHotel.getReview().tampil(this.tableListReview);
         } else {
-            JOptionPane.showMessageDialog(this, "Pilih salah satu kamar.");
+            JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
         }
-    }//GEN-LAST:event_btKamarActionPerformed
 
-    private void btDeleteKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteKamarActionPerformed
+    }//GEN-LAST:event_btReviewActionPerformed
+
+    private void btCancleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancleActionPerformed
         // TODO add your handling code here:
         if (this.hasCurrentHotel()) {
-            int row = this.tableListKamar.getSelectedRow();
+            int row = this.tableListReservasi.getSelectedRow();
             if (row > -1) {
-                
+
                 /* ambil id review */
-                int id = Integer.parseInt(this.tableListKamar.getValueAt(row, 0).toString());
-                
-                if (this.currentHotel.getKamar().deleteKamar(id)) {
-                    this.currentHotel.getKamar().tampil(this.tableListKamar);
+                int id = Integer.parseInt(this.tableListReservasi.getValueAt(row, 0).toString());
+
+                if (this.currentHotel.getReservasi().cancleReserv(id)) {
+                    this.currentHotel.getReservasi().tampil(this.tableListReservasi);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Gagal menghapus kamar.");
+                    JOptionPane.showMessageDialog(this, "Gagal men-cancle reservasi.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Pilih salah satu kamar.");
+                JOptionPane.showMessageDialog(this, "Pilih salah satu reservasi.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
         }
-    }//GEN-LAST:event_btDeleteKamarActionPerformed
+    }//GEN-LAST:event_btCancleActionPerformed
 
     private void btReservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReservasiActionPerformed
         // TODO add your handling code here:
@@ -524,40 +647,107 @@ public class GUIListHotel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btReservasiActionPerformed
 
-    private void btCancleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancleActionPerformed
+    private void btDeleteKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteKamarActionPerformed
         // TODO add your handling code here:
-         if (this.hasCurrentHotel()) {
-            int row = this.tableListReservasi.getSelectedRow();
+        if (this.hasCurrentHotel()) {
+            int row = this.tableListKamar.getSelectedRow();
             if (row > -1) {
-                
+
                 /* ambil id review */
-                int id = Integer.parseInt(this.tableListReservasi.getValueAt(row, 0).toString());
-                
-                if (this.currentHotel.getReservasi().cancleReserv(id)) {
-                    this.currentHotel.getReservasi().tampil(this.tableListReservasi);
+                int id = Integer.parseInt(this.tableListKamar.getValueAt(row, 0).toString());
+
+                if (this.currentHotel.getKamar().deleteKamar(id)) {
+                    this.currentHotel.getKamar().tampil(this.tableListKamar);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Gagal men-cancle reservasi.");
+                    JOptionPane.showMessageDialog(this, "Gagal menghapus kamar.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Pilih salah satu reservasi.");
+                JOptionPane.showMessageDialog(this, "Pilih salah satu kamar.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
         }
-    }//GEN-LAST:event_btCancleActionPerformed
+    }//GEN-LAST:event_btDeleteKamarActionPerformed
 
-    private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
+    private void btKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKamarActionPerformed
         // TODO add your handling code here:
-        GUIListUser guiUser = new GUIListUser(this, this.currentUser);
-        guiUser.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnManageUserActionPerformed
+        if (this.hasCurrentHotel()) {
+            this.addKamar.setListKamar(this.currentHotel.getKamar());
+            this.addKamar.setTitle(this.currentHotel.getNama());
+            this.addKamar.setVisible(true);
+            this.currentHotel.getKamar().tampil(this.tableListKamar);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih salah satu kamar.");
+        }
+    }//GEN-LAST:event_btKamarActionPerformed
 
-    private void btnProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfilActionPerformed
+    private void btFasilitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFasilitasActionPerformed
         // TODO add your handling code here:
-        this.ubahProfile.setVisible(true);
-        labelUser.setText(this.currentUser.getNama() + " (" + currentUser.getJenis() + ")");
-    }//GEN-LAST:event_btnProfilActionPerformed
+        if (this.hasCurrentHotel()) {
+            this.addFasilitas.setListFasilitas(this.currentHotel.getFasilitas());
+            this.addFasilitas.setTitle(this.currentHotel.getNama());
+            this.addFasilitas.setVisible(true);
+            this.currentHotel.getFasilitas().tampil(this.tableListFasilias);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih salah satu Fasilitas.");
+        }
+    }//GEN-LAST:event_btFasilitasActionPerformed
+
+    private void btDeleteFasilitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteFasilitasActionPerformed
+        // TODO add your handling code here:
+        if (this.hasCurrentHotel()) {
+            int row = this.tableListFasilias.getSelectedRow();
+            if (row > -1) {
+
+                /* ambil id review */
+                int id = Integer.parseInt(this.tableListFasilias.getValueAt(row, 0).toString());
+
+                if (this.currentHotel.getFasilitas().deleteFasilitas(id)) {
+                    this.currentHotel.getFasilitas().tampil(this.tableListFasilias);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Gagal menghapus fasilitas.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Pilih salah satu fasilitas.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
+        }
+    }//GEN-LAST:event_btDeleteFasilitasActionPerformed
+
+    private void btLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLokasiActionPerformed
+        // TODO add your handling code here:
+        if (this.hasCurrentHotel()) {
+            this.addLokasi.setListLokasi(this.currentHotel.getLokasi());
+            this.addLokasi.setTitle(this.currentHotel.getNama());
+            this.addLokasi.setVisible(true);
+            this.currentHotel.getLokasi().tampil(this.tableListLokasi);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih salah satu Lokasi.");
+        }
+    }//GEN-LAST:event_btLokasiActionPerformed
+
+    private void btDeleteLokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteLokasiActionPerformed
+        // TODO add your handling code here:
+        if (this.hasCurrentHotel()) {
+            int row = this.tableListLokasi.getSelectedRow();
+            if (row > -1) {
+
+                /* ambil id review */
+                int id = Integer.parseInt(this.tableListLokasi.getValueAt(row, 0).toString());
+
+                if (this.currentHotel.getLokasi().deleteLokasi(id)) {
+                    this.currentHotel.getLokasi().tampil(this.tableListLokasi);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Gagal menghapus Lokasi.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Pilih salah satu Lokasi.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih salah satu hotel.");
+        }
+    }//GEN-LAST:event_btDeleteLokasiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -567,9 +757,13 @@ public class GUIListHotel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancle;
     private javax.swing.JButton btDelete;
+    private javax.swing.JButton btDeleteFasilitas;
     private javax.swing.JButton btDeleteKamar;
+    private javax.swing.JButton btDeleteLokasi;
     private javax.swing.JButton btDeleteReview;
+    private javax.swing.JButton btFasilitas;
     private javax.swing.JButton btKamar;
+    private javax.swing.JButton btLokasi;
     private javax.swing.JButton btReservasi;
     private javax.swing.JButton btReview;
     private javax.swing.JButton btTambahHotel;
@@ -581,13 +775,19 @@ public class GUIListHotel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel labelUser;
+    private javax.swing.JPanel panFasilitas;
     private javax.swing.JPanel panKamar;
+    private javax.swing.JPanel panLokasi;
     private javax.swing.JPanel panReservasi;
     private javax.swing.JPanel panReview;
-    private javax.swing.JTabbedPane tabDetail;
+    private javax.swing.JTabbedPane tabDetaiHotel;
+    private javax.swing.JTable tableListFasilias;
     private javax.swing.JTable tableListHotel;
     private javax.swing.JTable tableListKamar;
+    private javax.swing.JTable tableListLokasi;
     private javax.swing.JTable tableListReservasi;
     private javax.swing.JTable tableListReview;
     private javax.swing.JLabel titleListHotel;

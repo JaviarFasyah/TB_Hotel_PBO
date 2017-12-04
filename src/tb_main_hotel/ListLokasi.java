@@ -30,7 +30,7 @@ public class ListLokasi {
      public int refesh() {
 
         try{
-            ResultSet rs = this.db.getData("select nama, deskripsi from fasilitas where (idHotel = " + this.idHotel + ")");
+            ResultSet rs = this.db.getData("select idLokasi, kota, provinsi from lokasi where (idHotel = " + this.idHotel + ")");
             
             this.lokasi.clear();
             while(rs.next()){    
@@ -145,9 +145,9 @@ public class ListLokasi {
         
         /*id otomatis */
         int id = this.lokasi.size()+1;
-        System.out.println("insert into lokasi (idlokasi, kota, provinsi, idHotel) values (" + id + ", '" + kota + "', '" + provinsi + "', " + this.idHotel +")");
+        System.out.println("insert into lokasi (idLokasi, kota, provinsi, idHotel) values (" + id + ", '" + kota + "', '" + provinsi + "', " + this.idHotel +")");
         /* simpan ke db */
-        if (this.db.query("insert into lokasi (idlokasi, kota, provinsi, idHotel) values (" + id+ ", '" + kota + "', '" + provinsi  + "', " + this.idHotel +")")) {
+        if (this.db.query("insert into lokasi (idLokasi, kota, provinsi, idHotel) values (" + id+ ", '" + kota + "', '" + provinsi  + "', " + this.idHotel +")")) {
             /* add ke list */
             Lokasi lokasi = new Lokasi(id, kota, provinsi, this.idHotel);
             this.lokasi.add(lokasi);

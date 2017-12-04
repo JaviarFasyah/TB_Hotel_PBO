@@ -56,6 +56,7 @@ public class DialogaddKamar extends javax.swing.JDialog {
         txHarga = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         titleKamar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         titleKamar.setText("Kamar");
@@ -102,7 +103,7 @@ public class DialogaddKamar extends javax.swing.JDialog {
                 .addGap(17, 17, 17))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleNoKamar)
@@ -118,10 +119,8 @@ public class DialogaddKamar extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(titleHarga)
                         .addGap(72, 72, 72)
-                        .addComponent(txHarga))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(titleKamar)))
+                        .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(titleKamar))
                 .addContainerGap(159, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

@@ -51,6 +51,7 @@ public class DialogaddHotel extends javax.swing.JDialog {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         titletHotel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         titletHotel.setText("Tambah Hotel");
